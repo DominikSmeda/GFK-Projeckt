@@ -203,6 +203,7 @@ void GUIMyFrame1::update() {
 		for (int i = 0; i < curve.getSegmentsSize() - 1; i++) {
 			dc.DrawLine(renderSegments[i].GetX(), renderSegments[i].GetY(), renderSegments[i + 1].GetX(), renderSegments[i + 1].GetY());
 		}
+		dc.DrawLine(renderSegments[0].GetX(), renderSegments[0].GetY(), renderSegments[curve.getSegmentsSize()-1].GetX(), renderSegments[curve.getSegmentsSize()-1].GetY());
 	}
 	else {
 		for (int i = 0; i < curve.getSegmentsSize(); i++) {

@@ -1,6 +1,6 @@
 //Extremely simple vector and matrix classes by Janusz Malinowski. 
-#include <stdio.h>
 #pragma once
+#include <stdio.h>
 class Vector4
 {
 public:
