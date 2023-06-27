@@ -22,4 +22,8 @@ bool MyApp::OnInit()
 	return true;
 }
 
+<<<<<<< Updated upstream
 //zmiana
+=======
+// DOMINIK
+>>>>>>> Stashed changes
