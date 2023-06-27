@@ -207,7 +207,7 @@ void GUIMyFrame1::update() {
 	}
 	else {
 		for (int i = 0; i < curve.getSegmentsSize(); i++) {
-			dc.DrawPoint(wxPoint(renderSegments[i].GetX(),renderSegments[i].GetY()));
+			dc.DrawPoint(wxPoint(renderSegments[i].GetX(), renderSegments[i].GetY()));
 			// Rysowanie elipsy wokó³ punktu
 			//wxPoint center(50, 50);
 			//wxSize size(10, 10); // Rozmiar elipsy
@@ -219,7 +219,7 @@ void GUIMyFrame1::update() {
 
 	//dc.DrawRotatedText(std::to_string(renderSegments[0].GetX())+ " : " + std::to_string(renderSegments[0].GetY()), 50, 50, 1);
 	//dc.DrawRotatedText(std::to_string(renderSegments[5].GetX()) + " : " + std::to_string(renderSegments[5].GetY()), 50, 100, 1);
-	dc.DrawRotatedText(std::to_string(curve.delta) + " : " + std::to_string(m_slider_delta->GetValue()), 50, 150, 1);
+	//dc.DrawRotatedText(std::to_string(curve.delta) + " : " + std::to_string(m_slider_delta->GetValue()), 50, 150, 1);
 
 
 
