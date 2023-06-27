@@ -61,14 +61,14 @@ void GUIMyFrame1::OnText_c( wxCommandEvent& event )
 
 void GUIMyFrame1::OnScroll_delta( wxScrollEvent& event )
 {
-	curve.delta = m_slider_delta->GetValue();
+	curve.delta = m_slider_delta->GetValue() * 2 * M_PI / 100;
 	curve.update();
 	update();
 }
 
 void GUIMyFrame1::OnScroll_phi( wxScrollEvent& event )
 {
-	curve.phi = m_slider_phi->GetValue();
+	curve.phi = m_slider_phi->GetValue() * 2 * M_PI / 100;
 	curve.update();
 	update();
 }
@@ -133,7 +133,7 @@ void GUIMyFrame1::update() {
 
 	double alpha;
 	Matrix4 mRotateX;
-	alpha = m_slider_rotateX->GetValue() * M_PI / 180.0;
+	alpha = m_slider_rotateX->GetValue() * 2 * M_PI / 100;
 	mRotateX.data[0][0] = 1;
 	mRotateX.data[1][1] = cos(alpha);
 	mRotateX.data[1][2] = sin(alpha);
@@ -141,7 +141,7 @@ void GUIMyFrame1::update() {
 	mRotateX.data[2][2] = cos(alpha);
 
 	Matrix4 mRotateY;
-	alpha = m_slider_rotateY->GetValue() * M_PI / 180.0;
+	alpha = m_slider_rotateY->GetValue() * 2 * M_PI / 100;
 	mRotateY.data[0][0] = cos(alpha);
 	mRotateY.data[0][2] = -sin(alpha);
 	mRotateY.data[1][1] = 1;
@@ -149,7 +149,7 @@ void GUIMyFrame1::update() {
 	mRotateY.data[2][2] = cos(alpha);
 
 	Matrix4 mRotateZ;
-	alpha = m_slider_rotateZ->GetValue() * M_PI / 180.0;
+	alpha = m_slider_rotateZ->GetValue() * 2 * M_PI /100;
 	mRotateZ.data[0][0] = cos(alpha);
 	mRotateZ.data[0][1] = sin(alpha);
 	mRotateZ.data[1][0] = -sin(alpha);
@@ -218,7 +218,7 @@ void GUIMyFrame1::update() {
 
 	//dc.DrawRotatedText(std::to_string(renderSegments[0].GetX())+ " : " + std::to_string(renderSegments[0].GetY()), 50, 50, 1);
 	//dc.DrawRotatedText(std::to_string(renderSegments[5].GetX()) + " : " + std::to_string(renderSegments[5].GetY()), 50, 100, 1);
-	//dc.DrawRotatedText(std::to_string(renderSegments[200].GetX()) + " : " + std::to_string(renderSegments[200].GetY()), 50, 150, 1);
+	dc.DrawRotatedText(std::to_string(curve.delta) + " : " + std::to_string(m_slider_delta->GetValue()), 50, 150, 1);
 
 
 
