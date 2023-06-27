@@ -21,3 +21,5 @@ bool MyApp::OnInit()
 
 	return true;
 }
+
+//zmiana
