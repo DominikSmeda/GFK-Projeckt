@@ -1,14 +1,18 @@
 #include "GUIMyFrame1.h"
 
-GUIMyFrame1::GUIMyFrame1( wxWindow* parent )
+GUIMyFrame1::GUIMyFrame1( wxWindow* parent)
 :
 MyFrame1( parent )
 {
+	
 	update();
+	
 }
 
 void GUIMyFrame1::OnSize(wxSizeEvent& event) {
+	
 	update();
+	
 }
 
 void GUIMyFrame1::OnText_A( wxCommandEvent& event )
@@ -16,14 +20,22 @@ void GUIMyFrame1::OnText_A( wxCommandEvent& event )
 	double arg = atoi(m_textCtrl_A->GetValue().c_str());
 	curve.A = arg;
 	curve.update();
+	box.A = arg;
+	box.update();
+	axis.A = arg;
+	axis.update();
 	update();
 }
 
 void GUIMyFrame1::OnText_B( wxCommandEvent& event )
 {
 	double arg = atoi(m_textCtrl_A->GetValue().c_str());
-	curve.A = arg;
+	curve.B = arg;
 	curve.update();
+	box.B = arg;
+	box.update();
+	axis.B = arg;
+	axis.update();
 	update();
 }
 
@@ -32,6 +44,10 @@ void GUIMyFrame1::OnText_C( wxCommandEvent& event )
 	double arg = atoi(m_textCtrl_C->GetValue().c_str());
 	curve.C = arg;
 	curve.update();
+	box.C = arg;
+	box.update();
+	axis.C = arg;
+	axis.update();
 	update();
 }
 
@@ -130,7 +146,6 @@ void GUIMyFrame1::update() {
 	wxClientDC dc(m_panel1);
 	//wxBufferedDC dc(&_dc);
 
-
 	double alpha;
 	Matrix4 mRotateX;
 	alpha = m_slider_rotateX->GetValue() * 2 * M_PI / 100;
@@ -192,12 +207,56 @@ void GUIMyFrame1::update() {
 		renderSegments[i] = mainMatrix * segments[i];
 	}
 
+	///////// SquareBox
+	Vector4* box_lines = box.getPoints();
+	Vector4* render_box_lines = new Vector4[8];
+
+	for (int i = 0; i < 8; i++) {
+		render_box_lines[i] = mainMatrix * box_lines[i];
+	}
+	/////////
+
+	//////// Axis
+	Vector4* axis_lines = axis.getPoints();
+	Vector4* render_axis_lines = new Vector4[8];
+
+	for (int i = 0; i < 6; i++) {
+		render_axis_lines[i] = mainMatrix * axis_lines[i];
+	}
+	////////
+
 	int drawMode = m_choice_linePoints->GetSelection();
 	
 	dc.SetBackground(*wxWHITE_BRUSH);
 	dc.Clear();
 
-	dc.SetPen(wxPen(wxColour(0, 0, 0)));
+	//////// Axis drawing
+	dc.SetPen(wxPen(wxColour(255, 0, 0),2));
+	dc.DrawLine(render_axis_lines[0].GetX(), render_axis_lines[0].GetY(), render_axis_lines[1].GetX(), render_axis_lines[1].GetY());
+	dc.SetPen(wxPen(wxColour(0, 255, 0),2));
+	dc.DrawLine(render_axis_lines[2].GetX(), render_axis_lines[2].GetY(), render_axis_lines[3].GetX(), render_axis_lines[3].GetY());
+	dc.SetPen(wxPen(wxColour(0, 0, 255),2));
+	dc.DrawLine(render_axis_lines[4].GetX(), render_axis_lines[4].GetY(), render_axis_lines[5].GetX(), render_axis_lines[5].GetY());
+	////////
+
+	///////// Box drawing
+	dc.SetPen(wxPen(wxColour(0, 0, 0), 2));
+	dc.DrawLine(render_box_lines[0].GetX(), render_box_lines[0].GetY(), render_box_lines[1].GetX(), render_box_lines[1].GetY());
+	dc.DrawLine(render_box_lines[1].GetX(), render_box_lines[1].GetY(), render_box_lines[2].GetX(), render_box_lines[2].GetY());
+	dc.DrawLine(render_box_lines[2].GetX(), render_box_lines[2].GetY(), render_box_lines[3].GetX(), render_box_lines[3].GetY());
+	dc.DrawLine(render_box_lines[3].GetX(), render_box_lines[3].GetY(), render_box_lines[0].GetX(), render_box_lines[0].GetY());
+	dc.DrawLine(render_box_lines[4].GetX(), render_box_lines[4].GetY(), render_box_lines[5].GetX(), render_box_lines[5].GetY());
+	dc.DrawLine(render_box_lines[5].GetX(), render_box_lines[5].GetY(), render_box_lines[6].GetX(), render_box_lines[6].GetY());
+	dc.DrawLine(render_box_lines[6].GetX(), render_box_lines[6].GetY(), render_box_lines[7].GetX(), render_box_lines[7].GetY());
+	dc.DrawLine(render_box_lines[7].GetX(), render_box_lines[7].GetY(), render_box_lines[4].GetX(), render_box_lines[4].GetY());
+	dc.DrawLine(render_box_lines[0].GetX(), render_box_lines[0].GetY(), render_box_lines[4].GetX(), render_box_lines[4].GetY());
+	dc.DrawLine(render_box_lines[1].GetX(), render_box_lines[1].GetY(), render_box_lines[5].GetX(), render_box_lines[5].GetY());
+	dc.DrawLine(render_box_lines[2].GetX(), render_box_lines[2].GetY(), render_box_lines[6].GetX(), render_box_lines[6].GetY());
+	dc.DrawLine(render_box_lines[3].GetX(), render_box_lines[3].GetY(), render_box_lines[7].GetX(), render_box_lines[7].GetY());
+	////////
+
+
+	dc.SetPen(wxPen(wxColour(255, 51, 153),2));
 
 	if (drawMode == 0) {
 		for (int i = 0; i < curve.getSegmentsSize() - 1; i++) {
@@ -215,7 +274,9 @@ void GUIMyFrame1::update() {
 			//dc.DrawEllipse(rect);
 		}
 	}
+	
 
+	
 
 	//dc.DrawRotatedText(std::to_string(renderSegments[0].GetX())+ " : " + std::to_string(renderSegments[0].GetY()), 50, 50, 1);
 	//dc.DrawRotatedText(std::to_string(renderSegments[5].GetX()) + " : " + std::to_string(renderSegments[5].GetY()), 50, 100, 1);
@@ -224,6 +285,8 @@ void GUIMyFrame1::update() {
 
 
 	delete[] renderSegments;
+	delete[] render_axis_lines;
+	delete[] render_box_lines;
 }
 
 

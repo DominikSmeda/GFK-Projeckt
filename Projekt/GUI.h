@@ -60,6 +60,9 @@ class MyFrame1 : public wxFrame
 		wxStaticText* m_staticText15;
 		wxStaticText* m_staticText16;
 		wxStaticText* m_staticText17;
+		wxStaticText* m_staticText18;
+		wxStaticText* m_staticText19;
+		wxStaticText* m_staticText20;
 		wxTextCtrl* m_textCtrl_A;
 		wxTextCtrl* m_textCtrl_B;
 		wxTextCtrl* m_textCtrl_C;
@@ -105,7 +108,7 @@ class MyFrame1 : public wxFrame
 
 	public:
 
-		MyFrame1( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 601,700 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MyFrame1( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 601,700 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL| wxFULL_REPAINT_ON_RESIZE);
 
 		~MyFrame1();
 

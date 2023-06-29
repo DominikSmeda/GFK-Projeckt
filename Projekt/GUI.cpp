@@ -12,12 +12,26 @@
 MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	SetTitle(_("Krzywe Lissajous w 3D"));
+	SetIcon(wxNullIcon);
 
 	wxBoxSizer* bSizer1;
 	bSizer1 = new wxBoxSizer( wxHORIZONTAL );
 
 	wxBoxSizer* bSizer4;
 	bSizer4 = new wxBoxSizer( wxVERTICAL );
+
+	m_staticText18 = new wxStaticText(this, wxID_ANY, wxT(" "), wxDefaultPosition, wxSize(-1, 5), 0);
+	m_staticText18->Wrap(-1);
+	bSizer4->Add(m_staticText18, 0, wxALL, 5);
+
+	m_staticText19 = new wxStaticText(this, wxID_ANY, wxT("Curve equations:"), wxDefaultPosition, wxSize(-1, 20), 0);
+	m_staticText19->Wrap(-1);
+	bSizer4->Add(m_staticText19, 0, wxALL, 5);
+
+	m_staticText20 = new wxStaticText(this, wxID_ANY, wxT(" "), wxDefaultPosition, wxSize(-1, 1), 0);
+	m_staticText20->Wrap(-1);
+	bSizer4->Add(m_staticText20, 0, wxALL, 5);
 
 	m_staticText2 = new wxStaticText( this, wxID_ANY, wxT("Value of A"), wxDefaultPosition, wxSize( -1,23 ), 0 );
 	m_staticText2->Wrap( -1 );
@@ -75,7 +89,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_staticline9 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxSize( -1,-1 ), wxLI_HORIZONTAL );
 	bSizer4->Add( m_staticline9, 0, wxEXPAND | wxALL, 5 );
 
-	m_staticText13 = new wxStaticText( this, wxID_ANY, wxT(" "), wxDefaultPosition, wxSize( -1,23 ), 0 );
+	m_staticText13 = new wxStaticText( this, wxID_ANY, wxT("Line or Points"), wxDefaultPosition, wxSize( -1,23 ), 0 );
 	m_staticText13->Wrap( -1 );
 	bSizer4->Add( m_staticText13, 0, wxALL, 5 );
 
@@ -86,11 +100,11 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_staticline10 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	bSizer4->Add( m_staticline10, 0, wxEXPAND | wxALL, 5 );
 
-	m_staticText15 = new wxStaticText( this, wxID_ANY, wxT(" "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText15 = new wxStaticText( this, wxID_ANY, wxT("Allow to animate"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText15->Wrap( -1 );
 	bSizer4->Add( m_staticText15, 0, wxALL, 5 );
 
-	m_staticText16 = new wxStaticText( this, wxID_ANY, wxT(" "), wxDefaultPosition, wxSize( -1,23 ), 0 );
+	m_staticText16 = new wxStaticText( this, wxID_ANY, wxT("Start/Stop Animation"), wxDefaultPosition, wxSize( -1,23 ), 0 );
 	m_staticText16->Wrap( -1 );
 	bSizer4->Add( m_staticText16, 0, wxALL, 5 );
 
@@ -103,6 +117,10 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
+
+	m_staticText1 = new wxStaticText(this, wxID_ANY, wxT("x = A * sin(a * t + delta)\ny = B * sin(b * t)\nz = C * sin(c * t + phi)"), wxDefaultPosition, wxDefaultSize, 0);
+	m_staticText1->Wrap(-1);
+	bSizer2->Add(m_staticText1, 0, wxALL, 5);
 
 	m_textCtrl_A = new wxTextCtrl( this, wxID_ANY, wxT("1"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_textCtrl_A, 0, wxALL, 5 );
@@ -170,9 +188,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_textCtrl_lineLength = new wxTextCtrl( this, wxID_ANY, wxT("10"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_textCtrl_lineLength, 0, wxALL, 5 );
 
-	m_staticText1 = new wxStaticText( this, wxID_ANY, wxT("x = A * sin(a * t + delta)\ny = B * sin(b * t)\nz = C * sin(c * t + phi)"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText1->Wrap( -1 );
-	bSizer2->Add( m_staticText1, 0, wxALL, 5 );
+	
 
 
 	bSizer1->Add( bSizer2, 0, wxEXPAND, 5 );
