@@ -104,11 +104,13 @@ class MyFrame1 : public wxFrame
 		virtual void OnCheckBox_animation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClick_StartStop( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnText_lineLength( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSize(wxSizeEvent& event) { event.Skip(); }
+		virtual void WxPanel_Repaint(wxUpdateUIEvent& event) { event.Skip(); }
 
 
 	public:
-
-		MyFrame1( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 601,700 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL| wxFULL_REPAINT_ON_RESIZE);
+		
+		MyFrame1( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = "Krzywe Lissajous w 3D", const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1200,800 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
 
 		~MyFrame1();
 

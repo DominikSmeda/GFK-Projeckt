@@ -4,13 +4,18 @@ GUIMyFrame1::GUIMyFrame1( wxWindow* parent)
 :
 MyFrame1( parent )
 {
-	
 	update();
 	
 }
 
 void GUIMyFrame1::OnSize(wxSizeEvent& event) {
 	
+	update();
+	
+}
+
+void GUIMyFrame1::WxPanel_Repaint(wxUpdateUIEvent& event)
+{
 	update();
 	
 }
@@ -143,32 +148,37 @@ void GUIMyFrame1::OnText_lineLength( wxCommandEvent& event )
 
 void GUIMyFrame1::update() {
 
-	wxClientDC dc(m_panel1);
-	//wxBufferedDC dc(&_dc);
+	wxClientDC dc1(m_panel1);
+	wxBufferedDC dc(&dc1);
+	
+	dc.SetBackground(wxBrush(RGB(255, 255, 255)));
+	dc.Clear();
 
 	double alpha;
 	Matrix4 mRotateX;
-	alpha = m_slider_rotateX->GetValue() * 2 * M_PI / 100;
+	alpha = m_slider_rotateX->GetValue() * 2. * M_PI / 100.;
 	mRotateX.data[0][0] = 1;
 	mRotateX.data[1][1] = cos(alpha);
-	mRotateX.data[1][2] = sin(alpha);
-	mRotateX.data[2][1] = -sin(alpha);
+	mRotateX.data[1][2] = -sin(alpha);
+	mRotateX.data[2][1] = sin(alpha);
 	mRotateX.data[2][2] = cos(alpha);
 
+	double beta;
 	Matrix4 mRotateY;
-	alpha = m_slider_rotateY->GetValue() * 2 * M_PI / 100;
-	mRotateY.data[0][0] = cos(alpha);
-	mRotateY.data[0][2] = -sin(alpha);
+	beta = m_slider_rotateY->GetValue() * 2. * M_PI / 100.;
+	mRotateY.data[0][0] = cos(beta);
+	mRotateY.data[0][2] = sin(beta);
 	mRotateY.data[1][1] = 1;
-	mRotateY.data[2][0] = sin(alpha);
-	mRotateY.data[2][2] = cos(alpha);
+	mRotateY.data[2][0] = -sin(beta);
+	mRotateY.data[2][2] = cos(beta);
 
+	double gamma;
 	Matrix4 mRotateZ;
-	alpha = m_slider_rotateZ->GetValue() * 2 * M_PI /100;
-	mRotateZ.data[0][0] = cos(alpha);
-	mRotateZ.data[0][1] = sin(alpha);
-	mRotateZ.data[1][0] = -sin(alpha);
-	mRotateZ.data[1][1] = cos(alpha);
+	gamma = m_slider_rotateZ->GetValue() * 2. * M_PI /100.;
+	mRotateZ.data[0][0] = cos(gamma);
+	mRotateZ.data[0][1] = -sin(gamma);
+	mRotateZ.data[1][0] = sin(gamma);
+	mRotateZ.data[1][1] = cos(gamma);
 	mRotateZ.data[2][2] = 1;
 
 	Matrix4 mTranslation;

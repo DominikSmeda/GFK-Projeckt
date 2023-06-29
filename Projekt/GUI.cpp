@@ -11,9 +11,10 @@
 
 MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
-	SetTitle(_("Krzywe Lissajous w 3D"));
-	SetIcon(wxNullIcon);
+	//this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	//SetTitle(_("Krzywe Lissajous w 3D"));
+	//SetIcon(wxNullIcon);
+	//SetClientSize(this->FromDIP(wxSize(1200, 800)));
 
 	wxBoxSizer* bSizer1;
 	bSizer1 = new wxBoxSizer( wxHORIZONTAL );
