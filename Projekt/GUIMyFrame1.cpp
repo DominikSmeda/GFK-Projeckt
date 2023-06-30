@@ -4,13 +4,6 @@ GUIMyFrame1::GUIMyFrame1( wxWindow* parent)
 :
 MyFrame1( parent )
 {
-	update();
-	
-}
-
-void GUIMyFrame1::OnSize(wxSizeEvent& event) {
-	
-	update();
 	
 }
 
@@ -34,7 +27,7 @@ void GUIMyFrame1::OnText_A( wxCommandEvent& event )
 
 void GUIMyFrame1::OnText_B( wxCommandEvent& event )
 {
-	double arg = atoi(m_textCtrl_A->GetValue().c_str());
+	double arg = atoi(m_textCtrl_B->GetValue().c_str());
 	curve.B = arg;
 	curve.update();
 	box.B = arg;
@@ -266,12 +259,18 @@ void GUIMyFrame1::update() {
 	////////
 
 
-	dc.SetPen(wxPen(wxColour(255, 51, 153),2));
+	wxPen pen(wxColour(255, 51, 153), 3);
+	//pen.SetStyle(wxPENSTYLE_DOT_DASH);
+	dc.SetPen(pen);
 
 	if (drawMode == 0) {
 		for (int i = 0; i < curve.getSegmentsSize() - 1; i++) {
+			wxPen pen(wxColour(255, 51, 153), (renderSegments[i].GetZ() /125.0)+5);
+			dc.SetPen(pen);
 			dc.DrawLine(renderSegments[i].GetX(), renderSegments[i].GetY(), renderSegments[i + 1].GetX(), renderSegments[i + 1].GetY());
 		}
+		wxPen pen(wxColour(255, 51, 153), (renderSegments[0].GetZ() / 125.0) + 5);
+		dc.SetPen(pen);
 		dc.DrawLine(renderSegments[0].GetX(), renderSegments[0].GetY(), renderSegments[curve.getSegmentsSize()-1].GetX(), renderSegments[curve.getSegmentsSize()-1].GetY());
 	}
 	else {

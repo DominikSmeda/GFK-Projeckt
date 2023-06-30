@@ -44,7 +44,6 @@ class GUIMyFrame1 : public MyFrame1
 		void OnCheckBox_animation( wxCommandEvent& event );
 		void OnButtonClick_StartStop( wxCommandEvent& event );
 		void OnText_lineLength( wxCommandEvent& event );
-		void OnSize(wxSizeEvent& event );
 		void WxPanel_Repaint(wxUpdateUIEvent& event);
 	public:
 		/** Constructor */
