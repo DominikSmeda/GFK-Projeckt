@@ -8,7 +8,8 @@
 #include "GUI.h"
 
 ///////////////////////////////////////////////////////////////////////////
-
+#define ID_WXCHECKBOX1 1003
+#define ID_WXTIMER1 1002
 MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	//this->SetSizeHints( wxDefaultSize, wxDefaultSize );
@@ -180,7 +181,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_staticline5 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	bSizer2->Add( m_staticline5, 0, wxEXPAND | wxALL, 5 );
 
-	m_checkBox_animation = new wxCheckBox( this, wxID_ANY, wxT("Animation"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkBox_animation = new wxCheckBox( this, ID_WXCHECKBOX1, wxT("Animation"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_checkBox_animation, 0, wxALL, 5 );
 
 	m_button_StartStop = new wxButton( this, wxID_ANY, wxT("Start/Stop"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -265,9 +266,15 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_slider_rotateZ->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MyFrame1::OnScroll_rotateZ ), NULL, this );
 	m_choice_linePoints->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyFrame1::OnChoice_linePoints ), NULL, this );
 	m_textCtrl_numberOfPoints->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MyFrame1::OnText_numberOfPoints ), NULL, this );
-	m_checkBox_animation->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MyFrame1::OnCheckBox_animation ), NULL, this );
+	//NIE BO TIMER !!! m_checkBox_animation->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MyFrame1::OnCheckBox_animation ), NULL, this );
 	m_button_StartStop->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::OnButtonClick_StartStop ), NULL, this );
 	m_textCtrl_lineLength->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MyFrame1::OnText_lineLength ), NULL, this );
+
+	WxTimer1 = new wxTimer();
+	WxTimer1->SetOwner(this, ID_WXTIMER1);
+
+	Bind(wxEVT_TIMER, &MyFrame1::Timer1_Timer, this, ID_WXTIMER1);
+	Bind(wxEVT_CHECKBOX, &MyFrame1::CheckBox1_Click, this, ID_WXCHECKBOX1);
 }
 
 MyFrame1::~MyFrame1()
@@ -329,5 +336,25 @@ MyFrame1::~MyFrame1()
 	m_checkBox_animation->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MyFrame1::OnCheckBox_animation ), NULL, this );
 	m_button_StartStop->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::OnButtonClick_StartStop ), NULL, this );
 	m_textCtrl_lineLength->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MyFrame1::OnText_lineLength ), NULL, this );
-
 }
+
+void MyFrame1::Timer1_Timer(wxTimerEvent& e)
+{
+	
+	RequestAnimationFrame();
+}
+
+void MyFrame1::CheckBox1_Click(wxCommandEvent& e)
+{
+	if (m_checkBox_animation->IsChecked())
+	{
+		WxTimer1->Start(25);
+	}
+	else
+	{
+		WxTimer1->Stop();
+	}
+}
+
+
+

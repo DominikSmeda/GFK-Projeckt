@@ -12,12 +12,12 @@ struct LissajousCurve
 	public:
 		double A, B, C, a, b, c, phi, delta;
 
-		LissajousCurve():segmentsSize(1000) {
+		LissajousCurve():segmentsSize(800) {
 			A = 1.0;
-			B = 0.8;
-			C = 0.6;
-			a = 3.0;
-			b = 2.0;
+			B = 1.0;
+			C = 1.0;
+			a = 1.0;
+			b = 1.0;
 			c = 1.0;
 			delta = 0.0;
 			phi = 0.0;

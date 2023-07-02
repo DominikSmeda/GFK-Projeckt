@@ -22,8 +22,4 @@ bool MyApp::OnInit()
 	return true;
 }
 
-//zmiana56
-
-
-//nowe
 

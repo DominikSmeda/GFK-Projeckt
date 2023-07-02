@@ -27,6 +27,7 @@
 #include <wx/icon.h>
 #include <wx/panel.h>
 #include <wx/frame.h>
+#include <wx/wxprec.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -86,6 +87,7 @@ class MyFrame1 : public wxFrame
 		wxTextCtrl* m_textCtrl_lineLength;
 		wxStaticText* m_staticText1;
 		wxPanel* m_panel1;
+		wxTimer* WxTimer1;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnText_A( wxCommandEvent& event ) { event.Skip(); }
@@ -107,7 +109,9 @@ class MyFrame1 : public wxFrame
 		virtual void OnSize(wxSizeEvent& event) { event.Skip(); }
 		virtual void WxPanel_Repaint(wxUpdateUIEvent& event) { event.Skip(); }
 
-
+		void Timer1_Timer(wxTimerEvent& e);
+		void CheckBox1_Click(wxCommandEvent& e);
+		virtual void RequestAnimationFrame(){}
 	public:
 		
 		MyFrame1( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = "Krzywe Lissajous w 3D", const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1200,800 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);

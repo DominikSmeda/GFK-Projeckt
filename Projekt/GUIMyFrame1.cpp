@@ -4,7 +4,8 @@ GUIMyFrame1::GUIMyFrame1( wxWindow* parent)
 :
 MyFrame1( parent )
 {
-	
+	animator.setCurve(&curve);
+	animator.setPanel(m_panel1);
 }
 
 void GUIMyFrame1::WxPanel_Repaint(wxUpdateUIEvent& event)
@@ -140,10 +141,9 @@ void GUIMyFrame1::OnText_lineLength( wxCommandEvent& event )
 }
 
 void GUIMyFrame1::update() {
-
 	wxClientDC dc1(m_panel1);
 	wxBufferedDC dc(&dc1);
-	
+
 	dc.SetBackground(wxBrush(RGB(255, 255, 255)));
 	dc.Clear();
 
@@ -275,23 +275,45 @@ void GUIMyFrame1::update() {
 	}
 	else {
 		for (int i = 0; i < curve.getSegmentsSize(); i++) {
-			dc.DrawPoint(wxPoint(renderSegments[i].GetX(), renderSegments[i].GetY()));
+			//dc.DrawPoint(wxPoint(renderSegments[i].GetX(), renderSegments[i].GetY()));
 			// Rysowanie elipsy wokó³ punktu
-			//wxPoint center(50, 50);
-			//wxSize size(10, 10); // Rozmiar elipsy
-			//wxRect rect(center - size / 2, size);
-			//dc.DrawEllipse(rect);
+			wxPoint center(renderSegments[i].GetX(), renderSegments[i].GetY());
+			double depthSize = (renderSegments[i].GetZ() / 125.0) + 4;
+			wxSize size(depthSize, depthSize); // Rozmiar elipsy
+			wxRect rect(center - size / 2, size);
+			dc.DrawEllipse(rect);
 		}
 	}
 	
+	const int snakeLength = atoi(m_textCtrl_lineLength->GetValue().c_str());
 
+	double currentSnakeLength = 0;
+	if (step >= curve.getSegmentsSize()) {
+		step = 0;
+	}
+	for (int i = 0; currentSnakeLength < snakeLength; i++) {
+		int index1 = (step + i) %curve.getSegmentsSize();
+		int index2 = (step+i+1) % curve.getSegmentsSize();
+		//if (index2 > curve.getSegmentsSize()) {
+		//	index2 = 6;
+		//}
+		//if (index1 > curve.getSegmentsSize()) {
+		//	index1 = 6;
+		//}
+		currentSnakeLength += sqrt(pow(renderSegments[index1].GetX() - renderSegments[index2].GetX(), 2) + pow(renderSegments[index1].GetY() - renderSegments[index2].GetY(), 2));
+		dc.DrawRotatedText(std::to_string(index1) + " : " + std::to_string(index2), 50, 50, 1);
+		wxPen pen(wxColour(0, 255, 53), 8);
+		dc.SetPen(pen);
+		dc.DrawLine(renderSegments[index1].GetX(), renderSegments[index1].GetY(), renderSegments[index2].GetX(), renderSegments[index2].GetY());
+
+	}
 	
 
-	//dc.DrawRotatedText(std::to_string(renderSegments[0].GetX())+ " : " + std::to_string(renderSegments[0].GetY()), 50, 50, 1);
+	//dc.DrawRotatedText(std::to_string(currentSnakeLength) +" : "+std::to_string(snakeLength), 50, 50, 1);
 	//dc.DrawRotatedText(std::to_string(renderSegments[5].GetX()) + " : " + std::to_string(renderSegments[5].GetY()), 50, 100, 1);
 	//dc.DrawRotatedText(std::to_string(curve.delta) + " : " + std::to_string(m_slider_delta->GetValue()), 50, 150, 1);
 
-
+	//animator.update(dc);
 
 	delete[] renderSegments;
 	delete[] render_axis_lines;
@@ -299,5 +321,9 @@ void GUIMyFrame1::update() {
 }
 
 
-
+void GUIMyFrame1::RequestAnimationFrame()
+{
+	update();
+	step++;
+}
 
