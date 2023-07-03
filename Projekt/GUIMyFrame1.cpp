@@ -17,7 +17,7 @@ void GUIMyFrame1::OnText_A( wxCommandEvent& event )
 {
 	double arg = atoi(m_textCtrl_A->GetValue().c_str());
 	curve.A = arg;
-	curve.update();
+	curve.update(m_choice_coordsSystem->GetSelection());
 	box.A = arg;
 	box.update();
 	axis.A = arg;
@@ -29,7 +29,7 @@ void GUIMyFrame1::OnText_B( wxCommandEvent& event )
 {
 	double arg = atoi(m_textCtrl_B->GetValue().c_str());
 	curve.B = arg;
-	curve.update();
+	curve.update(m_choice_coordsSystem->GetSelection());
 	box.B = arg;
 	box.update();
 	axis.B = arg;
@@ -41,7 +41,7 @@ void GUIMyFrame1::OnText_C( wxCommandEvent& event )
 {
 	double arg = atoi(m_textCtrl_C->GetValue().c_str());
 	curve.C = arg;
-	curve.update();
+	curve.update(m_choice_coordsSystem->GetSelection());
 	box.C = arg;
 	box.update();
 	axis.C = arg;
@@ -53,7 +53,7 @@ void GUIMyFrame1::OnText_a( wxCommandEvent& event )
 {
 	double arg = atoi(m_textCtrl_a->GetValue().c_str());
 	curve.a = arg;
-	curve.update();
+	curve.update(m_choice_coordsSystem->GetSelection());
 	update();
 }
 
@@ -61,7 +61,7 @@ void GUIMyFrame1::OnText_b( wxCommandEvent& event )
 {
 	double arg = atoi(m_textCtrl_b->GetValue().c_str());
 	curve.b = arg;
-	curve.update();
+	curve.update(m_choice_coordsSystem->GetSelection());
 	update();
 }
 
@@ -69,21 +69,21 @@ void GUIMyFrame1::OnText_c( wxCommandEvent& event )
 {
 	double arg = atoi(m_textCtrl_c->GetValue().c_str());
 	curve.c = arg;
-	curve.update();
+	curve.update(m_choice_coordsSystem->GetSelection());
 	update();
 }
 
 void GUIMyFrame1::OnScroll_delta( wxScrollEvent& event )
 {
 	curve.delta = m_slider_delta->GetValue() * 2 * M_PI / 100;
-	curve.update();
+	curve.update(m_choice_coordsSystem->GetSelection());
 	update();
 }
 
 void GUIMyFrame1::OnScroll_phi( wxScrollEvent& event )
 {
 	curve.phi = m_slider_phi->GetValue() * 2 * M_PI / 100;
-	curve.update();
+	curve.update(m_choice_coordsSystem->GetSelection());
 	update();
 }
 
@@ -118,7 +118,7 @@ void GUIMyFrame1::OnText_numberOfPoints( wxCommandEvent& event )
 		size = 5000;
 	}
 	else {
-		curve.setSegmentsSize(size);
+		curve.setSegmentsSize(size,m_choice_coordsSystem->GetSelection());
 		update();
 	}
 
@@ -127,6 +127,11 @@ void GUIMyFrame1::OnText_numberOfPoints( wxCommandEvent& event )
 void GUIMyFrame1::OnCheckBox_animation( wxCommandEvent& event )
 {
 // TODO: Implement OnCheckBox_animation
+}
+
+void GUIMyFrame1::OnChoice_coordsSystem(wxCommandEvent& event) {
+	curve.update(m_choice_coordsSystem->GetSelection());
+	update();
 }
 
 void GUIMyFrame1::OnButtonClick_StartStop( wxCommandEvent& event )

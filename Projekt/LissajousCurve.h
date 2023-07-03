@@ -23,30 +23,39 @@ struct LissajousCurve
 			phi = 0.0;
 
 			allocateSegments();
-			update();
+			update(true);
 		}
 
 		~LissajousCurve() {
 			delete[] segments;
 		}
 
-		Vector4 calculate(double t) {
+		Vector4 calculate(double t, bool kartezian=true) {
 			Vector4 vec;	
-
-			double x =  A * sin(a * t + delta);
+			
+			double x = A * sin(a * t + delta);
 			double y = B * sin(b * t);
 			double z = C * sin(c * t + phi);
-			
-			vec.Set(x, y, z);
+
+			if (kartezian) {
+				vec.Set(x, y, z);
+			}
+			else {
+				double x1 = x * cos(y) * sin(z);
+				double x2 = x * sin(y) * sin(z);
+				double x3 = x * cos(z);
+
+				vec.Set(x1, x2, x3);
+			}
 
 			return vec;
 		}
 
-		void update() {
-			double tMax =2* std::max({ 2 * M_PI / a, 2 * M_PI / b, 2 * M_PI / c });
+		void update(bool kartezian) {
+			double tMax =4* std::max({ 2 * M_PI / a, 2 * M_PI / b, 2 * M_PI / c });
 
 			for (int i = 0; i < segmentsSize; i++) {
-				Vector4 v = calculate(i* tMax / segmentsSize);//przerobiæ na operator = 
+				Vector4 v = calculate(i* tMax / segmentsSize, kartezian);//przerobiæ na operator = 
 				segments[i].Set(v.GetX(), v.GetY(), v.GetZ());
 			}
 		}
@@ -59,12 +68,12 @@ struct LissajousCurve
 			return segments;
 		}
 
-		void setSegmentsSize(size_t size) {
+		void setSegmentsSize(size_t size, bool kartezian) {
 			delete[] segments;
 
 			segmentsSize = size;
 			allocateSegments();
-			update();
+			update(kartezian);
 		}
 
 	private:

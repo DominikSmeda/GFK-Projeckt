@@ -64,6 +64,7 @@ class MyFrame1 : public wxFrame
 		wxStaticText* m_staticText18;
 		wxStaticText* m_staticText19;
 		wxStaticText* m_staticText20;
+		wxStaticText* m_staticText21;
 		wxTextCtrl* m_textCtrl_A;
 		wxTextCtrl* m_textCtrl_B;
 		wxTextCtrl* m_textCtrl_C;
@@ -80,6 +81,7 @@ class MyFrame1 : public wxFrame
 		wxSlider* m_slider_rotateZ;
 		wxStaticLine* m_staticline4;
 		wxChoice* m_choice_linePoints;
+		wxChoice* m_choice_coordsSystem;
 		wxTextCtrl* m_textCtrl_numberOfPoints;
 		wxStaticLine* m_staticline5;
 		wxCheckBox* m_checkBox_animation;
@@ -102,6 +104,7 @@ class MyFrame1 : public wxFrame
 		virtual void OnScroll_rotateY( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnScroll_rotateZ( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnChoice_linePoints( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnChoice_coordsSystem(wxCommandEvent& event) { event.Skip(); }
 		virtual void OnText_numberOfPoints( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCheckBox_animation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClick_StartStop( wxCommandEvent& event ) { event.Skip(); }

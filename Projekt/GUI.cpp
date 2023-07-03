@@ -114,6 +114,10 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_staticText17->Wrap( -1 );
 	bSizer4->Add( m_staticText17, 0, wxALL, 5 );
 
+	m_staticText21 = new wxStaticText(this, wxID_ANY, wxT("Coordinate system"), wxDefaultPosition, wxSize(-1, -1), 0);
+	m_staticText21->Wrap(-1);
+	bSizer4->Add(m_staticText21, 0, wxALL, 5);
+
 
 	bSizer1->Add( bSizer4, 0, wxEXPAND, 5 );
 
@@ -211,6 +215,13 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 
 	this->Centre( wxBOTH );
 
+	wxString m_choice_coordsSystemChoices[] = { wxT("polar"), wxT("cartesian")  };
+	int m_choice_linePointsNChoices2 = sizeof(m_choice_coordsSystemChoices) / sizeof(wxString);
+	m_choice_coordsSystem = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choice_linePointsNChoices2, m_choice_coordsSystemChoices, 0);
+	m_choice_coordsSystem->SetSelection(1);
+	bSizer2->Add(m_choice_coordsSystem, 0, wxALL, 5);
+
+
 	// Connect Events
 	m_panel1->Connect(wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MyFrame1::WxPanel_Repaint), NULL, this);
 	m_textCtrl_A->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MyFrame1::OnText_A ), NULL, this );
@@ -265,6 +276,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_slider_rotateZ->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( MyFrame1::OnScroll_rotateZ ), NULL, this );
 	m_slider_rotateZ->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MyFrame1::OnScroll_rotateZ ), NULL, this );
 	m_choice_linePoints->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyFrame1::OnChoice_linePoints ), NULL, this );
+	m_choice_coordsSystem->Connect(wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(MyFrame1::OnChoice_coordsSystem), NULL, this);
 	m_textCtrl_numberOfPoints->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MyFrame1::OnText_numberOfPoints ), NULL, this );
 	//NIE BO TIMER !!! m_checkBox_animation->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MyFrame1::OnCheckBox_animation ), NULL, this );
 	m_button_StartStop->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::OnButtonClick_StartStop ), NULL, this );
@@ -332,6 +344,7 @@ MyFrame1::~MyFrame1()
 	m_slider_rotateZ->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( MyFrame1::OnScroll_rotateZ ), NULL, this );
 	m_slider_rotateZ->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MyFrame1::OnScroll_rotateZ ), NULL, this );
 	m_choice_linePoints->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyFrame1::OnChoice_linePoints ), NULL, this );
+	m_choice_coordsSystem->Disconnect(wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(MyFrame1::OnChoice_coordsSystem), NULL, this);
 	m_textCtrl_numberOfPoints->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MyFrame1::OnText_numberOfPoints ), NULL, this );
 	m_checkBox_animation->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MyFrame1::OnCheckBox_animation ), NULL, this );
 	m_button_StartStop->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::OnButtonClick_StartStop ), NULL, this );

@@ -40,6 +40,7 @@ class GUIMyFrame1 : public MyFrame1
 		void OnScroll_rotateY( wxScrollEvent& event );
 		void OnScroll_rotateZ( wxScrollEvent& event );
 		void OnChoice_linePoints( wxCommandEvent& event );
+		void OnChoice_coordsSystem(wxCommandEvent& event);
 		void OnText_numberOfPoints( wxCommandEvent& event );
 		void OnCheckBox_animation( wxCommandEvent& event );
 		void OnButtonClick_StartStop( wxCommandEvent& event );
