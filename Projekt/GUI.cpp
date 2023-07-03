@@ -184,7 +184,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_checkBox_animation = new wxCheckBox( this, ID_WXCHECKBOX1, wxT("Animation"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_checkBox_animation, 0, wxALL, 5 );
 
-	m_button_StartStop = new wxButton( this, wxID_ANY, wxT("Start/Stop"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_button_StartStop = new wxButton( this, wxID_ANY, wxT("Start"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_button_StartStop, 0, wxALL, 5 );
 
 	m_textCtrl_lineLength = new wxTextCtrl( this, wxID_ANY, wxT("10"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -340,7 +340,6 @@ MyFrame1::~MyFrame1()
 
 void MyFrame1::Timer1_Timer(wxTimerEvent& e)
 {
-	
 	RequestAnimationFrame();
 }
 

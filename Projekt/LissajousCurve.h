@@ -43,7 +43,7 @@ struct LissajousCurve
 		}
 
 		void update() {
-			double tMax = std::max({ 2 * M_PI / a, 2 * M_PI / b, 2 * M_PI / c });
+			double tMax =2* std::max({ 2 * M_PI / a, 2 * M_PI / b, 2 * M_PI / c });
 
 			for (int i = 0; i < segmentsSize; i++) {
 				Vector4 v = calculate(i* tMax / segmentsSize);//przerobiæ na operator = 

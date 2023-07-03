@@ -4,8 +4,7 @@ GUIMyFrame1::GUIMyFrame1( wxWindow* parent)
 :
 MyFrame1( parent )
 {
-	animator.setCurve(&curve);
-	animator.setPanel(m_panel1);
+	m_button_StartStop->Disable();
 }
 
 void GUIMyFrame1::WxPanel_Repaint(wxUpdateUIEvent& event)
@@ -133,6 +132,14 @@ void GUIMyFrame1::OnCheckBox_animation( wxCommandEvent& event )
 void GUIMyFrame1::OnButtonClick_StartStop( wxCommandEvent& event )
 {
 // TODO: Implement OnButtonClick_StartStop
+	playAnimation = !playAnimation;
+	lastTime = wxDateTime::UNow();
+	if (playAnimation) {
+		m_button_StartStop->SetLabel("Stop");
+	}
+	else {
+		m_button_StartStop->SetLabel("Start");
+	}
 }
 
 void GUIMyFrame1::OnText_lineLength( wxCommandEvent& event )
@@ -284,30 +291,37 @@ void GUIMyFrame1::update() {
 			dc.DrawEllipse(rect);
 		}
 	}
-	
-	const int snakeLength = atoi(m_textCtrl_lineLength->GetValue().c_str());
 
-	double currentSnakeLength = 0;
-	if (step >= curve.getSegmentsSize()) {
-		step = 0;
-	}
-	for (int i = 0; currentSnakeLength < snakeLength; i++) {
-		int index1 = (step + i) %curve.getSegmentsSize();
-		int index2 = (step+i+1) % curve.getSegmentsSize();
-		//if (index2 > curve.getSegmentsSize()) {
-		//	index2 = 6;
-		//}
-		//if (index1 > curve.getSegmentsSize()) {
-		//	index1 = 6;
-		//}
-		currentSnakeLength += sqrt(pow(renderSegments[index1].GetX() - renderSegments[index2].GetX(), 2) + pow(renderSegments[index1].GetY() - renderSegments[index2].GetY(), 2));
-		dc.DrawRotatedText(std::to_string(index1) + " : " + std::to_string(index2), 50, 50, 1);
-		wxPen pen(wxColour(0, 255, 53), 8);
-		dc.SetPen(pen);
-		dc.DrawLine(renderSegments[index1].GetX(), renderSegments[index1].GetY(), renderSegments[index2].GetX(), renderSegments[index2].GetY());
+	if (m_checkBox_animation->IsChecked()) {
+		m_button_StartStop->Enable();
+		if (playAnimation) {
+			wxTimeSpan deltaTime = wxDateTime::UNow() - lastTime;
+			double dt = (deltaTime.GetMilliseconds()).ToDouble() / 10.0;
+			lastTime = wxDateTime::UNow();
+			step += dt;
+		}
 
+		const int snakeLength = atoi(m_textCtrl_lineLength->GetValue().c_str());
+		double currentSnakeLength = 0;
+		
+		if (step >= curve.getSegmentsSize()) {
+			step = 0;
+		}
+		for (int i = 0; currentSnakeLength < snakeLength; i++) {
+			int index1 = ((step + i) % curve.getSegmentsSize());
+			int index2 = ((step + i + 1) % curve.getSegmentsSize());
+
+			currentSnakeLength += sqrt(pow(renderSegments[index1].GetX() - renderSegments[index2].GetX(), 2) + pow(renderSegments[index1].GetY() - renderSegments[index2].GetY(), 2));
+
+			wxPen pen(wxColour(0, 255, 53), 8);
+			dc.SetPen(pen);
+			dc.DrawLine(renderSegments[index1].GetX(), renderSegments[index1].GetY(), renderSegments[index2].GetX(), renderSegments[index2].GetY());
+
+		}
 	}
-	
+	else {
+		m_button_StartStop->Disable();
+	}
 
 	//dc.DrawRotatedText(std::to_string(currentSnakeLength) +" : "+std::to_string(snakeLength), 50, 50, 1);
 	//dc.DrawRotatedText(std::to_string(renderSegments[5].GetX()) + " : " + std::to_string(renderSegments[5].GetY()), 50, 100, 1);
@@ -324,6 +338,5 @@ void GUIMyFrame1::update() {
 void GUIMyFrame1::RequestAnimationFrame()
 {
 	update();
-	step++;
 }
 
