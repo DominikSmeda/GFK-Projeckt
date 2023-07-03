@@ -52,10 +52,10 @@ struct LissajousCurve
 		}
 
 		void update(bool kartezian) {
-			double tMax =4* std::max({ 2 * M_PI / a, 2 * M_PI / b, 2 * M_PI / c });
+			double tMax =std::max({ 2 * M_PI / a, 2 * M_PI / b, 2 * M_PI / c });
 
 			for (int i = 0; i < segmentsSize; i++) {
-				Vector4 v = calculate(i* tMax / segmentsSize, kartezian);//przerobiæ na operator = 
+				Vector4 v = calculate(i* tMax / segmentsSize, kartezian);
 				segments[i].Set(v.GetX(), v.GetY(), v.GetZ());
 			}
 		}

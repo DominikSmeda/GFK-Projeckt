@@ -10,7 +10,6 @@ MyFrame1( parent )
 void GUIMyFrame1::WxPanel_Repaint(wxUpdateUIEvent& event)
 {
 	update();
-	
 }
 
 void GUIMyFrame1::OnText_A( wxCommandEvent& event )
@@ -136,7 +135,6 @@ void GUIMyFrame1::OnChoice_coordsSystem(wxCommandEvent& event) {
 
 void GUIMyFrame1::OnButtonClick_StartStop( wxCommandEvent& event )
 {
-// TODO: Implement OnButtonClick_StartStop
 	playAnimation = !playAnimation;
 	lastTime = wxDateTime::UNow();
 	if (playAnimation) {
@@ -200,20 +198,9 @@ void GUIMyFrame1::update() {
 	mScale.data[1][1] = scale / 100.0;
 	mScale.data[2][2] = scale / 100.0;
 
-	double ratio = 3;
-	Matrix4 mPerspective;
-	mPerspective.data[0][0] = 1;
-	mPerspective.data[1][1] = 1;
-	mPerspective.data[3][2] = 1.0 / ratio;
 
-	Matrix4 mView;
-	mView.data[0][0] = m_panel1->GetSize().GetWidth() / 2;
-	mView.data[1][1] = m_panel1->GetSize().GetHeight() / 2;
-	mView.data[0][3] = m_panel1->GetSize().GetWidth() / 2;
-	mView.data[1][3] = m_panel1->GetSize().GetHeight() / 2;
-
-	Matrix4 camMatrix = mView * mPerspective;
 	Matrix4 mainMatrix = mTranslation * mRotateX * mRotateY * mRotateZ * mScale;
+
 
 	Vector4* segments = curve.getSegments();
 	Vector4* renderSegments = new Vector4[curve.getSegmentsSize()];
@@ -287,11 +274,10 @@ void GUIMyFrame1::update() {
 	}
 	else {
 		for (int i = 0; i < curve.getSegmentsSize(); i++) {
-			//dc.DrawPoint(wxPoint(renderSegments[i].GetX(), renderSegments[i].GetY()));
 			// Rysowanie elipsy wokó³ punktu
 			wxPoint center(renderSegments[i].GetX(), renderSegments[i].GetY());
 			double depthSize = (renderSegments[i].GetZ() / 125.0) + 4;
-			wxSize size(depthSize, depthSize); // Rozmiar elipsy
+			wxSize size(depthSize, depthSize);
 			wxRect rect(center - size / 2, size);
 			dc.DrawEllipse(rect);
 		}
@@ -328,11 +314,6 @@ void GUIMyFrame1::update() {
 		m_button_StartStop->Disable();
 	}
 
-	//dc.DrawRotatedText(std::to_string(currentSnakeLength) +" : "+std::to_string(snakeLength), 50, 50, 1);
-	//dc.DrawRotatedText(std::to_string(renderSegments[5].GetX()) + " : " + std::to_string(renderSegments[5].GetY()), 50, 100, 1);
-	//dc.DrawRotatedText(std::to_string(curve.delta) + " : " + std::to_string(m_slider_delta->GetValue()), 50, 150, 1);
-
-	//animator.update(dc);
 
 	delete[] renderSegments;
 	delete[] render_axis_lines;

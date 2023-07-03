@@ -179,7 +179,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_choice_linePoints->SetSelection( 0 );
 	bSizer2->Add( m_choice_linePoints, 0, wxALL, 5 );
 
-	m_textCtrl_numberOfPoints = new wxTextCtrl( this, wxID_ANY, wxT("100"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrl_numberOfPoints = new wxTextCtrl( this, wxID_ANY, wxT("800"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_textCtrl_numberOfPoints, 0, wxALL, 5 );
 
 	m_staticline5 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
